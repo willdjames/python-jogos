@@ -13,23 +13,34 @@ def inicia_jogo():
 
     acertou = False
     enforcou = False
+    erros = 0
 
     while(not enforcou and not acertou):
 
-       chute = input("Uma letra: ")
-       chute = chute.strip()
+        chute = input("Uma letra: ")
+        chute = chute.strip()
 
-       index = 0
+        if(chute in palavra_secreta):
 
-       for letra in palavra_secreta:
+            index = 0
 
-           if(chute.upper() == letra.upper()):
-                print("{} na posição {}".format(chute, index))
-                letras_acertadas[index] = letra
+            for letra in palavra_secreta:
 
-           index += 1
+                if(chute.upper() == letra.upper()):
+                    print("{} na posição {}".format(chute, index))
+                    letras_acertadas[index] = letra
 
-       print(letras_acertadas)
+                index += 1
+
+            print(letras_acertadas)
+
+
+        else:
+            erros = erros + 1
+
+        enforcou = erros == 6
+        acertou = "_" not in letras_acertadas
+        print(erros)
 
     print("* Fim do jogo *")
 
