@@ -1,13 +1,28 @@
 # forca.py
 
+import random
+
 def inicia_jogo():
     
     print("******************************")
     print("* Bem vindo ao jogo da Forca *")
     print("******************************")
 
-    palavra_secreta = "banana"
-    letras_acertadas = ["_", "_", "_", "_", "_", "_"]
+
+    arquivo_palavra = open("palavra.txt", "r")
+    palavras = []
+
+    for linha in arquivo_palavra:
+        palavras.append(linha.strip())
+
+    arquivo_palavra.close()
+
+    numero = random.randrange(0, len(palavras))
+
+    palavra_secreta = palavras[numero].upper()
+    print(palavra_secreta)
+
+    letras_acertadas = ["_" for letra in palavra_secreta]
 
     print(letras_acertadas)
 
@@ -18,7 +33,7 @@ def inicia_jogo():
     while(not enforcou and not acertou):
 
         chute = input("Uma letra: ")
-        chute = chute.strip()
+        chute = chute.strip().upper()
 
         if(chute in palavra_secreta):
 
@@ -26,7 +41,7 @@ def inicia_jogo():
 
             for letra in palavra_secreta:
 
-                if(chute.upper() == letra.upper()):
+                if(chute == letra):
                     print("{} na posição {}".format(chute, index))
                     letras_acertadas[index] = letra
 
@@ -34,13 +49,13 @@ def inicia_jogo():
 
             print(letras_acertadas)
 
-
         else:
-            erros = erros + 1
+            erros += 1
 
         enforcou = erros == 6
         acertou = "_" not in letras_acertadas
-        print(erros)
+
+        print("Você tem {} tentativas ". format(6 - erros))
 
     print("* Fim do jogo *")
 
